@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TrackerSpring / Thought-Weeder Stress-Detainer / Repetitive Thought Repository</title>
+</head>
+<body>
+{{^user}}
+<form action="login" method="post">
+    <input type="text" placeholder="userName" name="userName" required>
+    <input type="password" placeholder="Password" name="password" required>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+<br><br>
+{{#user}}
+Welcome, {{name}}!
+<form action="/logout" method="post">
+    <button type="submit">Lobout</button>
+</form>
+<a href="/">All</a>
+<a href="/?category=charity">Charity</a>
+<a href="/?category=community">Community</a>
+<a href="/?category=entertainment">Entertainment</a>
+<a href="/?category=faith">Faith</a>
+<a href="/?category=family">Family</a>
+<a href="/?category=freedom">Freedom</a>
+<a href="/?category=maintenance">Maintenance</a>
+<a href="/?category=marriage">Marriage</a>
+<a href="/?category=money">Money</a>
+<a href="/?category=parenting">Parenting</a>
+<a href="/?category=tools">Tools</a>
+<a href="/?category=training">Training</a>
+<a href="/?category=vocation">Vocation</a>
+<br><br>
+<form action="/" method="get">
+    <input type="text" placeholder="Search" name="search">
+    <button type="submit">Search Descriptions</button>
+</form>
+<br><br>
+<form action="/add-thought" method="post">
+    <input type="text" placeholder="Description" name="descriptionText" size="50"/>
+    <select name="thoughtCategory">
+        <option selected disabled>Category</option>
+        <option value="charity">Charity</option>
+        <option value="community">Community</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="faith">Faith</option>
+        <option value="family">Family</option>
+        <option value="freedom">Freedom</option>
+        <option value="maintenance">Maintenance</option>
+        <option value="marriage">Marriage</option>
+        <option value="money">Money</option>
+        <option value="parenting">Parenting</option>
+        <option value="tools">Tools</option>
+        <option value="training">Training</option>
+        <option value="vocation">Vocation</option>
+    </select>
+    <input type="datetime-local" name="dateTime" value="{{now}}"/>
+    <button type="submit">Detain Thought</button>
+</form>
+
+<ol>
+    {{#thoughts}}
+    <li>{{description}} {{category}}  {{dateTime}}</li>
+    {{/thoughts}}
+</ol>
+
+{{/user}}
+</body>
+</html>
