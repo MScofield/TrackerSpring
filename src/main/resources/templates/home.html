@@ -71,7 +71,7 @@ Welcome, {{name}}!
 <ol>
     {{#thoughts}}
     <li>
-        Thought description: "{{description}}" Thought category: "{{category}}" Day of occurence: "{{dateTime}}"
+        DESCRIPTION:||{{description}}||    CATEGORY:||{{category}}||    Day of occurence:||{{dateTime}}||
         {{#user}}
         <form action="/edit-thought" method="post">
             <input type="hidden" value="{{thoughtId}}" name="thoughtId">
