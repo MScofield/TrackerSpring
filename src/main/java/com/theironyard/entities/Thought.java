@@ -22,7 +22,7 @@ public class Thought {
     LocalDateTime dateTime;
 
     @Column(nullable = false)
-    String subject;
+    String category;
 
     @ManyToOne
     User user;
@@ -30,10 +30,10 @@ public class Thought {
     public Thought() {
     }
 
-    public Thought(String description, LocalDateTime dateTime, String subject, User user) {
+    public Thought(String description, LocalDateTime dateTime, String category, User user) {
         this.description = description;
         this.dateTime = dateTime;
-        this.subject = subject;
+        this.category = category;
         this.user = user;
     }
 
@@ -61,12 +61,12 @@ public class Thought {
         this.dateTime = dateTime;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getCategory() {
+        return category;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public User getUser() {

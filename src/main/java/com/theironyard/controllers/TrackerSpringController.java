@@ -38,9 +38,10 @@ public class TrackerSpringController {
         }
     }// end if init postconstruct method
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpSession session, String category, String search){
         String userName = (String) session.getAttribute("userName");
-        List<Thought> thoughtEntities = thoughts.findAllByOrderByCategory();
+        List<Thought> thoughtEntities;
         if (userName != null) {
             User user = users.findFirstByName(userName);
             model.addAttribute("user", user);
@@ -51,22 +52,22 @@ public class TrackerSpringController {
         }else if (search != null) {
             thoughtEntities = thoughts.findByDescriptionStartsWith(search);
         }else{
-            thoughtEntities = (List<Thought>) thoughts.findAll();
+            thoughtEntities = (List<Thought>) thoughts.findAllByOrderByCategory();
         }
         model.addAttribute("thoughts", thoughtEntities);
         return "home";
     }//end of home slash method
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public String login(HttpSession session, String name, String password) throws Exception {
-        User user = users.findFirstByName(name);
+    public String login(HttpSession session, String userName, String password) throws Exception {
+        User user = users.findFirstByName(userName);
         if (user == null) {
-            user = new User(name, PasswordStorage.createHash(password));
+            user = new User(userName, PasswordStorage.createHash(password));
             users.save(user);
         }else if (!PasswordStorage.verifyPassword(password, user.password)){
             throw new   Exception("Incorrect Password");
         }
-        session.setAttribute("userName", name);
+        session.setAttribute("userName", userName);
         return "redirect:/";
     }// end of login method
 
@@ -77,10 +78,13 @@ public class TrackerSpringController {
     }//end of logout method
 
     @RequestMapping(path = "/add-thought", method = RequestMethod.POST)
-    public String addthought(HttpSession session, String description, LocalDateTime dateTime, String category){
+    public String addthought(HttpSession session, String descriptionText, String dateTime, String thoughtCategory){
         String userName = (String) session.getAttribute("userName");
         User user = users.findFirstByName(userName);
-        Thought thought = new Thought(description, dateTime, category, user);
+        System.out.println(descriptionText);
+        System.out.println(dateTime);
+        System.out.println(thoughtCategory);
+        Thought thought = new Thought(descriptionText, LocalDateTime.parse(dateTime), thoughtCategory, user);
         thoughts.save(thought);
         return "redirect:/";
     }//end of add thought method
