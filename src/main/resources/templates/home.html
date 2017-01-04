@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TrackerSpring / Peace-Curator Thought-Detainer / Repetitive Thought Repository</title>
+    <title>Thought Repository</title>
 </head>
 <body>
+TrackerSpring // Repetitive Thought Detainer
+<br><br>
+This tool will help you pin your recurring thoughts down and track their frequency.
+<br><br>
+This way they are less likely to recur and cause stress that can murder you slowly.
+<br><br>
 {{^user}}
 <form action="login" method="post">
     <input type="text" placeholder="userName" name="userName" required>
@@ -15,30 +21,28 @@
 <br><br>
 {{#user}}
 Welcome, {{name}}!
+<br><br>
 <form action="/logout" method="post">
-    <br><br>
     <button type="submit">Logout</button>
-    This tool will help you pin your recurring thoughts down and track their frequency.
-    This way they can't fly under the radar, drain your spirit and murder you slowly.
-    <br><br>
 </form>
-<a href="/">All</a>
-<a href="/?category=charity">Charity</a>
-<a href="/?category=community">Community</a>
-<a href="/?category=entertainment">Entertainment</a>
-<a href="/?category=faith">Faith</a>
-<a href="/?category=family">Family</a>
-<a href="/?category=freedom">Freedom</a>
-<a href="/?category=maintenance">Maintenance</a>
-<a href="/?category=marriage">Marriage</a>
-<a href="/?category=money">Money</a>
-<a href="/?category=parenting">Parenting</a>
-<a href="/?category=tools">Tools</a>
-<a href="/?category=training">Training</a>
-<a href="/?category=vocation">Vocation</a>
+<br><br>
+    <a href="/">All</a>
+    <a href="/?category=charity">Charity</a>
+    <a href="/?category=community">Community</a>
+    <a href="/?category=entertainment">Entertainment</a>
+    <a href="/?category=faith">Faith</a>
+    <a href="/?category=family">Family</a>
+    <a href="/?category=freedom">Freedom</a>
+    <a href="/?category=maintenance">Maintenance</a>
+    <a href="/?category=marriage">Marriage</a>
+    <a href="/?category=money">Money</a>
+    <a href="/?category=parenting">Parenting</a>
+    <a href="/?category=tools">Tools</a>
+    <a href="/?category=training">Training</a>
+    <a href="/?category=vocation">Vocation</a>
 <br><br>
 <form action="/" method="get">
-    <input type="text" placeholder="Search" name="search">
+    <input type="text" placeholder="Search descriptions" name="search">
     <button type="submit">Search Descriptions</button>
 </form>
 <br><br>
@@ -61,15 +65,28 @@ Welcome, {{name}}!
         <option value="vocation">Vocation</option>
     </select>
     <input type="datetime-local" name="dateTime" value="{{now}}"/>
-    <button type="submit">Detain Thought</button>
+    <button type="submit">Detain Thought!</button>
 </form>
-
+{{/user}}
 <ol>
     {{#thoughts}}
-    <li>{{description}} {{category}}  {{dateTime}}</li>
+    <li>
+        Thought description: "{{description}}" Thought category: "{{category}}" Day of occurence: "{{dateTime}}"
+        {{#user}}
+        <form action="/edit-thought" method="post">
+            <input type="hidden" value="{{thoughtId}}" name="thoughtId">
+            <input type="text" placeholder="Enter Replacement Description" name="descriptionText" size="50">
+            <button type="submit">Update Thought!</button>
+        </form>
+        <form action="/delete-thought" method="post">
+            <input type="hidden" value="{{thoughtId}}" name="thoughtId">
+            <button>Delete Thought!</button>
+        </form>
+        {{/user}}
+    </li>
     {{/thoughts}}
 </ol>
 
-{{/user}}
+
 </body>
 </html>

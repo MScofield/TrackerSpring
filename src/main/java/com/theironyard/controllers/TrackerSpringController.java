@@ -45,12 +45,12 @@ public class TrackerSpringController {
         if (userName != null) {
             User user = users.findFirstByName(userName);
             model.addAttribute("user", user);
-            model.addAttribute("now", LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+            model.addAttribute("now", LocalDateTime.now().truncatedTo(ChronoUnit.DAYS));
         }
         if (category != null) {
             thoughtEntities = thoughts.findByCategory(category);
         }else if (search != null) {
-            thoughtEntities = thoughts.findByDescriptionStartsWith(search);
+            thoughtEntities = thoughts.findByDescription(search);
         }else{
             thoughtEntities = (List<Thought>) thoughts.findAllByOrderByCategory();
         }
@@ -78,14 +78,34 @@ public class TrackerSpringController {
     }//end of logout method
 
     @RequestMapping(path = "/add-thought", method = RequestMethod.POST)
-    public String addthought(HttpSession session, String descriptionText, String dateTime, String thoughtCategory){
+    public String addthought(HttpSession session, String descriptionText, String dateTime, String thoughtCategory) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findFirstByName(userName);
         System.out.println(descriptionText);
         System.out.println(dateTime);
         System.out.println(thoughtCategory);
+        if (descriptionText != null && thoughtCategory != null){
         Thought thought = new Thought(descriptionText, LocalDateTime.parse(dateTime), thoughtCategory, user);
         thoughts.save(thought);
+        }else throw new Exception("description field cannot be blank");
         return "redirect:/";
     }//end of add thought method
+
+    @RequestMapping(path = "/delete-thought", method = RequestMethod.POST)
+    public String delete(int thoughtId)
+    {
+        thoughts.delete(thoughtId);
+        return "redirect:/";
+    }//end of route "deleteThought"
+
+    @RequestMapping(path = "/edit-thought", method = RequestMethod.POST)
+    public String edit(int thoughtId, String descriptionText) throws Exception {
+        Thought thought = thoughts.findOne(thoughtId);
+        if (descriptionText != null){
+        thought.description = descriptionText;
+        thoughts.save(thought);
+        }else throw new Exception("description field cannot be blank");
+        return "redirect:/";
+    }// end of route "edit"
+
 }// end of controller class

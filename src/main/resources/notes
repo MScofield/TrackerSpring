@@ -1,0 +1,11 @@
+{{#user}}
+        <form action="/delete-thought" method="post">
+            <input type="hidden" value="{{thoughtId}}" name="thoughtId">
+            <button>Delete!</button>
+        </form>
+        <form action="/edit-thought" method="post">
+            <input type="hidden" value="{{thoughtId}}" name="thoughtId">
+            <input type="text" placeholder="Enter Replacement Description" name="descriptionText" size="50">
+            <button type="submit">Update!</button>
+        </form>
+        {{/user}}

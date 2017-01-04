@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 public class Thought {
     @Id
     @GeneratedValue
-    int id;
+    int thoughtId;
 
     @Column
-    String description;
+    public String description;
 
     @Column(nullable = false)
     LocalDateTime dateTime;
@@ -37,12 +37,12 @@ public class Thought {
         this.user = user;
     }
 
-    public int getId() {
-        return id;
+    public int getThoughtId() {
+        return thoughtId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setThoughtId(int thoughtId) {
+        this.thoughtId = thoughtId;
     }
 
     public String getDescription() {
