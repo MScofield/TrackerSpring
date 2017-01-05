@@ -17,6 +17,6 @@ public interface ThoughtRepository extends CrudRepository<Thought, Integer>{
 //    int countByCategory(String Category);
 //    List<Thought> findByCategoryOrderByDateTimeDesc();
 
-    @Query ("SELECT t FROM Thought t WHERE t.description LIKE ?%")
+    @Query ("SELECT t FROM Thought t WHERE t.description LIKE ?1%")
     List<Thought> findByDescription(String description);
 }
