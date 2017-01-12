@@ -2,29 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Thought Repository</title>
 </head>
 <body>
+<br><br>
 TrackerSpring // Repetitive Thought Detainer
 <br><br>
+Welcome{{#sessionUser}}, {{name}}!!!
+<br>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br>{{/sessionUser}}
 This tool will help you pin your recurring thoughts down and track their frequency.
 <br><br>
 This way they are less likely to recur and cause stress that can murder you slowly.
-<br><br>
-{{^user}}
+{{^sessionUser}}
 <form action="login" method="post">
     <input type="text" placeholder="userName" name="userName" required>
     <input type="password" placeholder="Password" name="password" required>
     <button type="submit">Login</button>
 </form>
-{{/user}}
-<br><br>
-{{#user}}
-Welcome, {{name}}!
-<br><br>
-<form action="/logout" method="post">
-    <button type="submit">Logout</button>
-</form>
+{{/sessionUser}}
+<br>
+{{#sessionUser}}
 <br><br>
     <a href="/">All</a>
     <a href="/?category=charity">Charity</a>
@@ -67,12 +70,12 @@ Welcome, {{name}}!
     <input type="datetime-local" name="dateTime" value="{{now}}"/>
     <button type="submit">Detain Thought!</button>
 </form>
-{{/user}}
+{{/sessionUser}}
 <ol>
     {{#thoughts}}
     <li>
-        DESCRIPTION:||{{description}}||    CATEGORY:||{{category}}||    Day of occurence:||{{dateTime}}||
-        {{#user}}
+        ||_DESCRIPTION:__{{description}}__||_CATEGORY:__{{category}}__||_DATE.TIME:__{{dateTime}}__||
+        {{#sessionUser}}
         <form action="/edit-thought" method="post">
             <input type="hidden" value="{{thoughtId}}" name="thoughtId">
             <input type="text" placeholder="Enter Replacement Description" name="descriptionText" size="50">
@@ -81,12 +84,13 @@ Welcome, {{name}}!
         <form action="/delete-thought" method="post">
             <input type="hidden" value="{{thoughtId}}" name="thoughtId">
             <button>Delete Thought!</button>
+            <br><br>
         </form>
-        {{/user}}
+        {{/sessionUser}}
     </li>
     {{/thoughts}}
 </ol>
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -44,7 +44,7 @@ public class TrackerSpringController {
         List<Thought> thoughtEntities;
         if (userName != null) {
             User user = users.findFirstByName(userName);
-            model.addAttribute("user", user);
+            model.addAttribute("sessionUser", user);
             model.addAttribute("now", LocalDateTime.now().truncatedTo(ChronoUnit.DAYS));
         }
         if (category != null) {
